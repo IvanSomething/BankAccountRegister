@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: BankAccountRegister_development
+
+test:
+  <<: *default
+  database: BankAccountRegister_test
+
+production:
+  <<: *default
+  database: BankAccountRegister_production
+  username: BankAccountRegister
+  password: <%= ENV['BANKACCOUNTREGISTER_DATABASE_PASSWORD'] %>
