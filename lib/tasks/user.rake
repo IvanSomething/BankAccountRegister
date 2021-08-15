@@ -1,6 +1,6 @@
 namespace :user do
     desc "Create user"
-    task :create, [:first_name, :last_name, :patronymic_name, :identification_number, :tags] => :environment do |t, args|
+    task :create, [:first_name, :last_name, :patronymic_name, :identification_number] => :environment do |t, args|
      user = User.new(args.to_h)
      if user.save
       puts "SUCCESS: #{user.as_json}"
