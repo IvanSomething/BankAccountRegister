@@ -43,7 +43,7 @@
 Для работы с приложением используется инструмент rake:
  * на локальном сервере: http://localhost:3000
 
-### Команда для создания нового пользователя:
+### Создание нового пользователя
 
     rake "user:create[John,Doe,4th,18]"
 
@@ -54,3 +54,19 @@
 Пользователь с таким идентификационным номером уже существует:
 
     FAILURE: {:identification_number=>["has already been taken"]}
+
+### Открытие счета для пользователя
+
+    curl -d '{"account":{"currency":"usd"}, "identification_number":"18"}' -H "Content-Type: application/json" -X POST http://localhost:3000/accounts/
+
+Новый счет успешно создан:
+
+	{"id":2,"currency":"usd","amount":0,"user_id":3,"created_at":"2021-08-28T11:12:05.350Z","updated_at":"2021-08-28T11:12:05.350Z"
+
+Счет с такой валютой уже существует:
+
+	{"currency":["an account with this currency already exists"]}
+
+### Пополнение счета
+
+
