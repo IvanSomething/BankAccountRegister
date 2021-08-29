@@ -45,7 +45,7 @@
 
 ### Создание нового пользователя
 
-    rake "user:create[John,Doe,4th,18,Belarus]"
+    rake "user:create[John,Doe,4th,18,foo]"
 
 Новый пользователь успешно создан: 
 
