@@ -42,6 +42,7 @@
 
 Для работы с приложением используется инструмент rake:
  * на локальном сервере: http://localhost:3000
+ * на Heroku: https://bankaccountregister.herokuapp.com/
 
 ### Создание нового пользователя
 
