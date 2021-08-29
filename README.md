@@ -87,7 +87,7 @@
 
 	curl -d '{"account":{"user_ids":["1"],"date_from":"2021-01-01", "date_to":"2021-12-01", "report_type":"deposits_report"}}' -H "Content-Type: application/json" -X GET http://localhost:3000/reports
 
-	Пример отчета: 
+Пример отчета: 
 
 	{"usd":[{"amount":4,"user":"Doe"},{"amount":4,"user":"Doe"},{"amount":4,"user":"Doe"}]}
 
@@ -96,7 +96,7 @@
     
 	curl -d '{"account":{"user_ids":["1"],"tags":"foo","date_from":"2021-01-01", "date_to":"2021-12-01", "report_type":"measures_report"}}' -H "Content-Type: application/json" -X GET http://localhost:3000/reports
 
-	Пример отчета:
+Пример отчета:
 
 	{"Belarus":[{"avg":"3.0","max":4,"min":2}]}
 
@@ -104,6 +104,6 @@
 
     curl -d '{"account":{"user_ids":["1"],"tags":"foo","date_from":"2021-01-01", "date_to":"2021-12-01", "report_type":"total_amount_report"}}' -H "Content-Type: application/json" -X GET http://localhost:3000/reports
 
-    Пример отчета:
+Пример отчета:
 
 	{"usd":[{"amount":36}]}
