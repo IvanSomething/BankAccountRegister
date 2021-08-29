@@ -33,4 +33,12 @@ class ReportsManager
       .map { |row| MEASURES_REPORT_COLUMNS.zip(row).to_h }
       .group_by { |row| row.delete(:tag) }
   end
+
+  def total_amount_report
+    scoped_transactions
+      .group('currency')
+      .pluck('currency', Arel.sql('sum(accounts.amount)'))
+      .map { |row| TOTAL_AMOUNT_REPORT_COLUMNS.zip(row).to_h }
+      .group_by { |row| row.delete(:currency) }
+  end
 end
