@@ -45,7 +45,7 @@
 
 ### Создание нового пользователя
 
-    rake "user:create[John,Doe,4th,18]"
+    rake "user:create[John,Doe,4th,18,Belarus]"
 
 Новый пользователь успешно создан: 
 
@@ -83,3 +83,27 @@
 
 	{"sender_account":{"amount":4,"id":3,"currency":"usd","user_id":3,"created_at":"2021-08-28T15:40:40.054Z","updated_at":"2021-08-29T09:52:06.577Z"},"recipient_account":{"amount":16,"id":4,"currency":"usd","user_id":4,"created_at":"2021-08-28T15:40:51.341Z","updated_at":"2021-08-29T09:52:06.586Z"}}
 
+### Отчет "О сумме пополнений за период времени по-валютно"
+
+	curl -d '{"account":{"user_ids":["1"],"date_from":"2021-01-01", "date_to":"2021-12-01", "report_type":"deposits_report"}}' -H "Content-Type: application/json" -X GET http://localhost:3000/reports
+
+	Пример отчета: 
+
+	{"usd":[{"amount":4,"user":"Doe"},{"amount":4,"user":"Doe"},{"amount":4,"user":"Doe"}]}
+
+
+### Отчет "Средняя, максимальная и минимальная сумма переводов по тегам пользователей за период времени" 
+    
+	curl -d '{"account":{"user_ids":["1"],"tags":"foo","date_from":"2021-01-01", "date_to":"2021-12-01", "report_type":"measures_report"}}' -H "Content-Type: application/json" -X GET http://localhost:3000/reports
+
+	Пример отчета:
+
+	{"Belarus":[{"avg":"3.0","max":4,"min":2}]}
+
+### Отчет "Сумма всех счетов на текущий момент времени повалютно"
+
+    curl -d '{"account":{"user_ids":["1"],"tags":"foo","date_from":"2021-01-01", "date_to":"2021-12-01", "report_type":"total_amount_report"}}' -H "Content-Type: application/json" -X GET http://localhost:3000/reports
+
+    Пример отчета:
+
+	{"usd":[{"amount":36}]}
