@@ -68,5 +68,18 @@
 	{"currency":["an account with this currency already exists"]}
 
 ### Пополнение счета
+    
+	curl -d '{"account":{"currency":"usd","amount":"4"}}' -H "Content-Type: application/json" -X POST http://localhost:3000/transactions/1/deposit
 
+Счет успешно пополнен:
+
+    {"user_id":3,"amount":8,"id":3,"currency":"usd","created_at":"2021-08-28T15:40:40.054Z","updated_at":"2021-08-29T09:49:47.367Z"}
+
+### Перевод между счетами
+
+    curl -d '{"account":{"currency":"usd","amount":"4"},"sender_identification_number":"1","recipient_identification_number":"2"}' -H "Content-Type: application/json" -X POST http://localhost:3000/transactions/transfer 
+    
+Средства успешно переведены:
+
+	{"sender_account":{"amount":4,"id":3,"currency":"usd","user_id":3,"created_at":"2021-08-28T15:40:40.054Z","updated_at":"2021-08-29T09:52:06.577Z"},"recipient_account":{"amount":16,"id":4,"currency":"usd","user_id":4,"created_at":"2021-08-28T15:40:51.341Z","updated_at":"2021-08-29T09:52:06.586Z"}}
 
