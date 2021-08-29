@@ -41,4 +41,16 @@ class ReportsManager
       .map { |row| TOTAL_AMOUNT_REPORT_COLUMNS.zip(row).to_h }
       .group_by { |row| row.delete(:currency) }
   end
+
+  def scoped_transactions
+    @scoped_transactions ||=
+    Transaction
+    .joins(:account)
+    .joins(account: :user)
+    .joins(account: [user: :tags])
+    .then { |transactions| params[:user_ids].present? ? transactions.where('accounts.user_id' => params[:user_ids]) : transactions }
+    .then { |transactions| params[:date_from].present? ? transactions.where('transactions.created_at > ?', params[:date_from].to_date) : transactions }
+    .then { |transactions| params[:date_to].present? ? transactions.where('transactions.created_at < ?', params[:date_to].to_date) : transactions}
+    .then { |transactions| params[:tags].present? ? transactions.where('tags.name' => params[:tags]) : transactions }
+  end
 end
