@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:tags_attributes){[{name: 'foo'}]}
+  let(:tags_attributes) { [{ name: 'foo' }] }
   let(:user) do
     described_class.new(
       name: 'name',
       surname: 'surname',
       patronymic_name: 'patronymic_name',
-      identification_number: 1, 
+      identification_number: 1,
       tags_attributes: tags_attributes
     )
   end

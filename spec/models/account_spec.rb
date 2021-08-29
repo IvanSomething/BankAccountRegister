@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Account, type: :model do
@@ -7,7 +9,7 @@ RSpec.describe Account, type: :model do
       surname: 'surname',
       patronymic_name: 'patronymic_name',
       identification_number: 1,
-      tags_attributes: [{name: 'foo'}]
+      tags_attributes: [{ name: 'foo' }]
     }
   end
 

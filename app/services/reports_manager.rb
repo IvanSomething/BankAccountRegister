@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class ReportsManager
   DEPOSIT_REPORT_COLUMNS = %i[currency amount user].freeze
   DEPOSIT_REPORT_COLUMNS_SQL = [
     Arel.sql('accounts.currency'),
     Arel.sql('amount'),
-    Arel.sql('users.surname'),
+    Arel.sql('users.surname')
   ].freeze
   MEASURES_REPORT_COLUMNS = %i[avg max min tag].freeze
   MEASURES_REPORT_COLUMNS_SQL = [
@@ -61,10 +63,25 @@ class ReportsManager
 
   def scoped_transactions
     @scoped_transactions ||=
-    Transaction.joins(:account).joins(account: :user).joins(account: [user: :tags]).then { |transactions| params[:user_ids].present? ? transactions.where('accounts.user_id' => params[:user_ids]) : transactions }
-    .then { |transactions| params[:date_from].present? ? transactions.where('transactions.created_at > ?', params[:date_from].to_date) : transactions }
-    .then { |transactions| params[:date_to].present? ? transactions.where('transactions.created_at < ?', params[:date_to].to_date) : transactions}
-    .then { |transactions| params[:tags].present? ? transactions.where('tags.name' => params[:tags]) : transactions }
+      Transaction.joins(:account).joins(account: :user).joins(account: [user: :tags]).then do |transactions|
+        params[:user_ids].present? ? transactions.where('accounts.user_id' => params[:user_ids]) : transactions
+      end
+                 .then do |transactions|
+        if params[:date_from].present?
+          transactions.where('transactions.created_at > ?',
+                             params[:date_from].to_date)
+        else
+          transactions
+        end
+      end
+                 .then do |transactions|
+        if params[:date_to].present?
+          transactions.where('transactions.created_at < ?',
+                             params[:date_to].to_date)
+        else
+          transactions
+        end
+      end
+                 .then { |transactions| params[:tags].present? ? transactions.where('tags.name' => params[:tags]) : transactions }
   end
 end
-

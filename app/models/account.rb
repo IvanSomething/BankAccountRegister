@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Account < ApplicationRecord
   belongs_to :user
   has_many :transactions
@@ -7,7 +9,7 @@ class Account < ApplicationRecord
   validates :currency, presence: true
   validates :amount, numericality: { greater_than_or_equal_to: 0 }
   validate :currency_uniqueness, on: :create
-  
+
   def deposit(amount)
     self.amount += amount
     true
@@ -15,7 +17,7 @@ class Account < ApplicationRecord
 
   def deposit!(amount)
     deposit(amount)
-    save!    
+    save!
   end
 
   def withdraw(amount)
